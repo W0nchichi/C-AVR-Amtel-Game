@@ -14,6 +14,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include "ledmatrix.h"
 
 // Object definitions.
 #define ROOM       	(0U << 0)
@@ -29,17 +30,24 @@
 #define COLOUR_TARGET	(COLOUR_RED)
 #define COLOUR_DONE  	(COLOUR_GREEN)
 
+uint8_t player_row;
+uint8_t player_col;
+
+uint8_t board[MATRIX_NUM_ROWS][MATRIX_NUM_COLUMNS];
+
 /// <summary>
 /// Initialises the game.
 /// </summary>
-void initialise_game(void);
+uint8_t undo_moves(void);
+uint8_t redo_moves(void);
+void initialise_game(uint8_t level);
 
 /// <summary>
 /// Moves the player based on row and column deltas.
 /// </summary>
 /// <param name="delta_row">The row delta.</param>
 /// <param name="delta_col">The column delta.</param>
-void move_player(int8_t delta_row, int8_t delta_col);
+bool move_player(int8_t delta_row, int8_t delta_col);
 
 /// <summary>
 /// Detects whether the game is over (i.e., current level solved).
@@ -47,9 +55,16 @@ void move_player(int8_t delta_row, int8_t delta_col);
 /// <returns>Whether the game is over.</returns>
 bool is_game_over(void);
 
+void set_player_position(uint8_t row, uint8_t col);
+
+
+
 /// <summary>
 /// Flashes the player icon.
 /// </summary>
 void flash_player(void);
+void redrawing_from_loading(void);
+
+void flash_target_animation(void);
 
 #endif /* GAME_H_ */
